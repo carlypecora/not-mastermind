@@ -7,7 +7,7 @@ import ColorPicker from '../components/ColorPicker'
 export default class GameContainer extends React.Component {
 
 	renderColorSlots = () => {
-		return [...Array(8)].map(x => <ColorSlots />)
+		return [...Array(8).keys()].map(x => <ColorSlots key={x} />)
 	}
 
 	render(){

@@ -19,8 +19,8 @@ export default class App extends React.Component {
   render(){
   return (
     <View style={styles.container}>
-      {!this.state.start ? <StartButton handleStartClick={this.handleStartClick} /> : 
-        <GameContainer score={this.state.score} />}
+      {!this.state.start ? <StartButton  handleStartClick={this.handleStartClick} /> : 
+        <GameContainer style={{flex: 1}} score={this.state.score} />}
     </View>
   )}
 }
