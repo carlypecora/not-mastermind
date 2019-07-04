@@ -6,7 +6,8 @@ import GameContainer from './containers/GameContainer'
 export default class App extends React.Component {
 
   state = {
-    start: false
+    start: false,
+    score: 0
   }
 
   handleStartClick = () => {
@@ -19,7 +20,7 @@ export default class App extends React.Component {
   return (
     <View style={styles.container}>
       {!this.state.start ? <StartButton handleStartClick={this.handleStartClick} /> : 
-        <GameContainer />}
+        <GameContainer score={this.state.score} />}
     </View>
   )}
 }
