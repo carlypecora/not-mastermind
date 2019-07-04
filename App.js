@@ -1,16 +1,25 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import StartButton from './components/StartButton'
+import GameContainer from './containers/GameContainer'
 
 export default class App extends React.Component {
 
   state = {
-    name: "Yasmine"
+    start: false
   }
+
+  handleStartClick = () => {
+    this.setState({
+      start: true
+    })
+  }
+
   render(){
   return (
     <View style={styles.container}>
-      <Text>{this.state.name}</Text>
-      <Button title="click" onPress={()=> this.setState({name: "Carly"})} >click!</Button>
+      {!this.state.start ? <StartButton handleStartClick={this.handleStartClick} /> : 
+        <GameContainer />}
     </View>
   )}
 }
