@@ -6,7 +6,6 @@ import { View, Text, Button } from 'react-native'
 export default class ColorSlots extends React.Component {
 
 	render(){
-		console.log(this.props)
 		return(
 		// <View style={{backgroundColor: 'grey', borderRadius: 100, display: 'inline', position: 'absolute', height: 40, width: 40, marginLeft: 270, marginTop: 5}}></View>
 		

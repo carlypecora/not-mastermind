@@ -6,13 +6,21 @@ import ColorPicker from '../components/ColorPicker'
 
 export default class GameContainer extends React.Component {
 	state={
-		currentSlot: 8
+		currentSlot: 8,
+		selectedColor: "white"
+
+	}
+
+	updateSelectedColor = (color) => {
+		this.setState({
+			selectedColor: color
+		})
 	}
 
 	updateCurrentSlot = () => {
 		oldSlot = this.state.currentSlot
 		this.setState({
-			currentSlot: oldSlot + 1
+			currentSlot: oldSlot - 1
 		})
 	}
 
@@ -21,11 +29,12 @@ export default class GameContainer extends React.Component {
 	}
 
 	render(){
+		console.log(this.state.selectedColor)
 		return(
 			<View>
 				<Score score={this.props.score} />
 				{this.renderColorSlots()}
-				<ColorPicker />
+				<ColorPicker updateSelectedColor={this.updateSelectedColor}/>
 			</View>
 		)
 	}
