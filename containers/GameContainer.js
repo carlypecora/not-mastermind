@@ -4,10 +4,15 @@ import Score from '../components/Score'
 import ColorSlots from '../components/ColorSlots'
 import ColorPicker from '../components/ColorPicker'
 
+let empty =['grey', 'grey', 'grey', 'grey']
+let emptyBoard = [[...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty]]
+
 export default class GameContainer extends React.Component {
 	state={
-		currentSlot: 8,
-		selectedColor: "white"
+		currentSlot: 7,
+		selectedColor: "white",
+		currentBoard: emptyBoard,
+		feedbackBoard: [...emptyBoard]
 
 	}
 
@@ -25,11 +30,10 @@ export default class GameContainer extends React.Component {
 	}
 
 	renderColorSlots = () => {
-		return [1, 2, 3, 4, 5, 6, 7, 8].map(x => <ColorSlots currentSlot={this.state.currentSlot} id={x} key={x}/>)
+		return [0, 1, 2, 3, 4, 5, 6, 7].map(x => <ColorSlots feedbackBoard={this.state.feedbackBoard} currentBoard={this.state.currentBoard} currentSlot={this.state.currentSlot} id={x} key={x}/>)
 	}
 
 	render(){
-		console.log(this.state.selectedColor)
 		return(
 			<View>
 				<Score score={this.props.score} />
