@@ -7,22 +7,18 @@ export default class ColorSlots extends React.Component {
 	render(){
 		console.log(this.props)
 		return(
-			<View style={{flex: 2, marginTop: 20, marginBottom: 20}}>
-				{this.props.currentSlot === this.props.id 
-				?
-				<button title="OK"></button>
-				:
-					<View style={{backgroundColor: 'grey', borderRadius: 100, display: 'inline', position: 'absolute', height: 15, width: 15, marginLeft: 10, marginTop: 15}}></View>
-					<View style={{backgroundColor: 'grey', borderRadius: 150, display: 'inline', position: 'absolute', height: 15, width: 15, marginLeft: 30, marginTop: 15}}></View>
-					<View style={{backgroundColor: 'grey', borderRadius: 150, display: 'inline', position: 'absolute', height: 15, width: 15, marginLeft: 50, marginTop: 15}}></View>
-					<View style={{backgroundColor: 'grey', borderRadius: 150, display: 'inline', position: 'absolute', height: 15, width: 15, marginLeft: 70, marginTop: 15}}></View>
-				}
-					<View style={{backgroundColor: 'grey', borderRadius: 100, display: 'inline', position: 'absolute', height: 40, width: 40, marginLeft: 120, marginTop: 5}}></View>
-					<View style={{backgroundColor: 'grey', borderRadius: 100, display: 'inline', position: 'absolute', height: 40, width: 40, marginLeft: 170, marginTop: 5}}></View>
-					<View style={{backgroundColor: 'grey', borderRadius: 100, display: 'inline', position: 'absolute', height: 40, width: 40, marginLeft: 220, marginTop: 5}}></View>
-					<View style={{backgroundColor: 'grey', borderRadius: 100, display: 'inline', position: 'absolute', height: 40, width: 40, marginLeft: 270, marginTop: 5}}></View>
+		// <View style={{backgroundColor: 'grey', borderRadius: 100, display: 'inline', position: 'absolute', height: 40, width: 40, marginLeft: 270, marginTop: 5}}></View>
 		
 
+			<View style={{flex: 2, marginTop: 5, marginBottom: 20, flexDirection: 'row'}}>
+				<View style={{backgroundColor: 'white', borderRadius: 100, height: 40, width: 40, marginLeft: 20, marginTop: 5, float: 'right'}}></View>
+				<View style={{backgroundColor: 'white', borderRadius: 100, height: 40, width: 40, marginLeft: 20, marginTop: 5, float: 'right'}}></View>
+				<View style={{backgroundColor: 'white', borderRadius: 100, height: 40, width: 40, marginLeft: 20, marginTop: 5, float: 'right'}}></View>
+				<View style={{backgroundColor: 'white', borderRadius: 100, height: 40, width: 40, marginLeft: 20, marginTop: 5, float: 'right'}}></View>
+				<View style={{backgroundColor: 'grey', borderRadius: 100, height: 15, width: 15, marginLeft: 15, marginTop: 15 , float: 'right'}}></View>
+				<View style={{backgroundColor: 'grey', borderRadius: 150, height: 15, width: 15, marginLeft: 15, marginTop: 15 , float: 'right'}}></View>
+				<View style={{backgroundColor: 'grey', borderRadius: 150, height: 15, width: 15, marginLeft: 15, marginTop: 15 , float: 'right'}}></View>
+				<View style={{backgroundColor: 'grey', borderRadius: 150, height: 15, width: 15, marginLeft: 15, marginTop: 15 , float: 'right'}}></View>
 			</View>
 		)
 	}
