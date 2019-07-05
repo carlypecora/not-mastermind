@@ -6,7 +6,7 @@ import ColorPicker from '../components/ColorPicker'
 
 export default class GameContainer extends React.Component {
 	state={
-		currentSlot: 0
+		currentSlot: 8
 	}
 
 	updateCurrentSlot = () => {
