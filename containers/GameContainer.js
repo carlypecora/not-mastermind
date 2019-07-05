@@ -5,9 +5,19 @@ import ColorSlots from '../components/ColorSlots'
 import ColorPicker from '../components/ColorPicker'
 
 export default class GameContainer extends React.Component {
+	state={
+		currentSlot: 0
+	}
+
+	updateCurrentSlot = () => {
+		oldSlot = this.state.currentSlot
+		this.setState({
+			currentSlot: oldSlot + 1
+		})
+	}
 
 	renderColorSlots = () => {
-		return [...Array(8).keys()].map(x => <ColorSlots key={x} />)
+		return [1, 2, 3, 4, 5, 6, 7, 8].map(x => <ColorSlots currentSlot={this.state.currentSlot} id={x} key={x}/>)
 	}
 
 	render(){
