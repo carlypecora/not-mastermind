@@ -6,13 +6,17 @@ import ColorPicker from '../components/ColorPicker'
 
 let empty =['grey', 'grey', 'grey', 'grey']
 let emptyBoard = [[...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty]]
+let colors =["white", "hotpink", "yellow", "green", "red", "blue"]
+
 
 export default class GameContainer extends React.Component {
+
 	state={
 		currentSlot: 7,
 		selectedColor: "white",
 		currentBoard: emptyBoard,
-		feedbackBoard: [...emptyBoard]
+		feedbackBoard: [...emptyBoard],
+		winningBoard: null
 
 	}
 
@@ -29,6 +33,32 @@ export default class GameContainer extends React.Component {
 		})
 	}
 
+	shuffle = (a) => {
+	    var j, x, i;
+	    for (i = a.length - 1; i > 0; i--) {
+	        j = Math.floor(Math.random() * (i + 1));
+	        x = a[i];
+	        a[i] = a[j];
+	        a[j] = x;
+	    }
+	    return a;
+	}
+
+	generateWinningColors = () => {
+		let randomColors = this.shuffle(colors)
+		return randomColors.slice(0, 4)
+	}
+
+	componentDidMount(){
+		this.setState({
+			winningBoard: this.generateWinningColors()
+		})
+	}
+
+	gameover = () => {
+		
+	}
+
 	update
 
 	renderColorSlots = () => {
@@ -36,7 +66,7 @@ export default class GameContainer extends React.Component {
 	}
 
 	render(){
-		console.log(this.state.selectedColor)
+		console.log(this.state.winningBoard)
 		return(
 			<View>
 				<Score score={this.props.score} />
