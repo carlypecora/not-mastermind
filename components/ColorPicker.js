@@ -13,7 +13,7 @@ export default class ColorPicker extends React.Component {
 				<>
 				{colors.map(color => {
 					return (
-					  <TouchableHighlight key={color} onPress={()=>this.props.updateSelectedColor(color)}>
+						<TouchableHighlight key={color} onPress={()=>this.props.updateSelectedColor(color)}>
 						<View style={{backgroundColor: color, borderRadius: 100, height: 50, width: 50, marginLeft: 10, marginTop: 5}}></View>
 					  </TouchableHighlight>
 					)

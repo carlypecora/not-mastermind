@@ -29,11 +29,14 @@ export default class GameContainer extends React.Component {
 		})
 	}
 
+	update
+
 	renderColorSlots = () => {
 		return [0, 1, 2, 3, 4, 5, 6, 7].map(x => <ColorSlots feedbackBoard={this.state.feedbackBoard} currentBoard={this.state.currentBoard} currentSlot={this.state.currentSlot} id={x} key={x}/>)
 	}
 
 	render(){
+		console.log(this.state.selectedColor)
 		return(
 			<View>
 				<Score score={this.props.score} />
