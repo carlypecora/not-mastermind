@@ -23,7 +23,7 @@ export default class ColorSlots extends React.Component {
 			 	 </TouchableHighlight>
 					)
 				})}
-				<Button title="OK!"></Button>
+					<Button onPress={this.props.updateCurrentSlot} title="OK!"></Button>
 				</>
 				: 
 				<>
