@@ -29,10 +29,16 @@ export default class GameContainer extends React.Component {
 		})
 	}
 
-	update
+	updateColorsOnSlot = (index) => {
+		let updatedBoard = [...this.state.currentBoard]
+		updatedBoard[this.state.currentSlot][index] = this.state.selectedColor
+		this.setState({
+			currentBoard: updatedBoard
+		})
+	}
 
 	renderColorSlots = () => {
-		return [0, 1, 2, 3, 4, 5, 6, 7].map(x => <ColorSlots feedbackBoard={this.state.feedbackBoard} currentBoard={this.state.currentBoard} currentSlot={this.state.currentSlot} id={x} key={x}/>)
+		return [0, 1, 2, 3, 4, 5, 6, 7].map(x => <ColorSlots updateColorsOnSlot={this.updateColorsOnSlot} feedbackBoard={this.state.feedbackBoard} currentBoard={this.state.currentBoard} currentSlot={this.state.currentSlot} id={x} key={x}/>)
 	}
 
 	render(){
