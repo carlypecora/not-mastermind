@@ -7,15 +7,15 @@ import ColorPicker from '../components/ColorPicker'
 let empty =['grey', 'grey', 'grey', 'grey']
 let emptyBoard = [[...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty]]
 let colors =["white", "hotpink", "yellow", "green", "red", "blue"]
-
+let anotherEmptyBoard = [[...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty]]
 
 export default class GameContainer extends React.Component {
 
 	state={
 		currentSlot: 7,
 		selectedColor: "white",
-		currentBoard: emptyBoard,
-		feedbackBoard: [...emptyBoard],
+		currentBoard: [...emptyBoard],
+		feedbackBoard: [...anotherEmptyBoard],
 		winningBoard: null
 
 	}
@@ -60,9 +60,16 @@ export default class GameContainer extends React.Component {
 	}
 
 	update
+	updateColorsOnSlot = (index) => {
+		let updatedBoard = [...this.state.currentBoard]
+		updatedBoard[this.state.currentSlot][index] = this.state.selectedColor
+		this.setState({
+			currentBoard: updatedBoard
+		})
+	}
 
 	renderColorSlots = () => {
-		return [0, 1, 2, 3, 4, 5, 6, 7].map(x => <ColorSlots feedbackBoard={this.state.feedbackBoard} currentBoard={this.state.currentBoard} currentSlot={this.state.currentSlot} id={x} key={x}/>)
+		return [0, 1, 2, 3, 4, 5, 6, 7].map(x => <ColorSlots updateCurrentSlot={this.updateCurrentSlot} updateColorsOnSlot={this.updateColorsOnSlot} feedbackBoard={this.state.feedbackBoard} currentBoard={this.state.currentBoard} currentSlot={this.state.currentSlot} id={x} key={x}/>)
 	}
 
 	render(){

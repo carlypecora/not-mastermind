@@ -18,12 +18,12 @@ export default class ColorSlots extends React.Component {
 				<>
 				{this.props.currentBoard[this.props.id].map((slot, index)=> {
 				return(
-				<TouchableHighlight onPress={()=>console.log(index)}>
+				<TouchableHighlight onPress={()=>this.props.updateColorsOnSlot(index)}>
 					<View  style={{backgroundColor: slot , borderRadius: 100, height: 40, width: 40, marginLeft: 20, marginTop: 5, float: 'right'}}></View>
 			 	 </TouchableHighlight>
 					)
 				})}
-				<Button title="OK!"></Button>
+					<Button onPress={this.props.updateCurrentSlot} title="OK!"></Button>
 				</>
 				: 
 				<>
