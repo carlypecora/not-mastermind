@@ -1,12 +1,12 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, Button } from 'react-native'
 import Score from '../components/Score'
 import ColorSlots from '../components/ColorSlots'
 import ColorPicker from '../components/ColorPicker'
 
 let empty =['grey', 'grey', 'grey', 'grey']
 let emptyBoard = [[...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty]]
-let colors =["white", "hotpink", "yellow", "green", "red", "blue"]
+let colors =["white", "white", "white", "white", "hotpink", "hotpink", "hotpink", "hotpink", "yellow", "yellow", "yellow", "yellow","green", "green", "green", "green","red", "red", "red", "red", "blue", "blue", "blue", "blue"]
 let anotherEmptyBoard = [[...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty]]
 
 export default class GameContainer extends React.Component {
@@ -16,7 +16,8 @@ export default class GameContainer extends React.Component {
 		selectedColor: "white",
 		currentBoard: [...emptyBoard],
 		feedbackBoard: [...anotherEmptyBoard],
-		winningBoard: null
+		winningBoard: null,
+		win: false
 
 	}
 
@@ -27,6 +28,7 @@ export default class GameContainer extends React.Component {
 	}
 
 	updateCurrentSlot = () => {
+		this.checkGuess();
 		oldSlot = this.state.currentSlot
 		this.setState({
 			currentSlot: oldSlot - 1
@@ -55,11 +57,63 @@ export default class GameContainer extends React.Component {
 		})
 	}
 
+	checkGuess = () => {
+		let guess = [...this.state.currentBoard[this.state.currentSlot]]
+		let win = [...this.state.winningBoard]
+		console.log("WINNING BOARD", win)
+		console.log("current guess", guess)
+		let feedback = [...this.state.feedbackBoard[this.state.currentSlot]]
+		let j=0;
+		for (let i= 0; i<4; i++) {
+			
+			if(guess[i] === win[i]){
+				guess[i] = null;
+				win[i]=null;
+				feedback[j] = "black";
+				j++;
+			}
+		}
+		console.log("Current guess after black feedback", guess)
+		if(!feedback.includes("grey")){
+			this.gameover();
+		}
+		for(let i=0; i<4; i++){
+			if(guess[i]){
+				console.log("uncheck index", i)
+				for(let k = 0; k<4; k++){
+					if(i !== k && guess[i]===win[k]){
+						console.log("current slot index", k, "matched for white")
+						guess[i] = null;
+						win[k]=null;
+						feedback[j] = "white";
+						j++;
+						break;
+					}
+				}
+				console.log("GUESS arr after index",i , guess)
+
+				console.log("WIN arr after index",i , win)
+			}
+		}
+		newFeedback = this.state.feedbackBoard.map((slot, index) => {
+			if(index === this.state.currentSlot){
+				return feedback
+			} else{
+				return slot
+			}
+
+		})
+		this.setState({
+			feedbackBoard: newFeedback
+		})
+	}
 	gameover = () => {
-		
+		this.setState({
+			win: true
+		})
 	}
 
-	update
+	
 	updateColorsOnSlot = (index) => {
 		let updatedBoard = [...this.state.currentBoard]
 		updatedBoard[this.state.currentSlot][index] = this.state.selectedColor
@@ -73,12 +127,19 @@ export default class GameContainer extends React.Component {
 	}
 
 	render(){
-		console.log(this.state.winningBoard)
+		
 		return(
 			<View>
 				<Score score={this.props.score} />
-				{this.renderColorSlots()}
-				<ColorPicker updateSelectedColor={this.updateSelectedColor}/>
+				{this.state.win 
+				?
+				<Button onPress={this.forceUpdate} title="You Win! Play Another Game?"></Button>
+				:
+				<>
+					{this.renderColorSlots()}
+					<ColorPicker updateSelectedColor={this.updateSelectedColor}/>
+				</>
+				}
 			</View>
 		)
 	}
