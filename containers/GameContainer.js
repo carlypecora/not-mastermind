@@ -60,7 +60,7 @@ export default class GameContainer extends React.Component {
 	}
 
 	componentDidMount(){
-		fetch("https://3baf2a3d.ngrok.io/total"	)
+		fetch("https://fc4e63af.ngrok.io/total"	)
 		.then(r => r.json())
 		.then(score =>{
 			this.setState({
@@ -79,7 +79,7 @@ export default class GameContainer extends React.Component {
 		
 		if(prevState.win !== this.state.win){
 			console.log("component did update AND passed conditional")
-			fetch("https://3baf2a3d.ngrok.io/scores", {
+			fetch("https://fc4e63af.ngrok.io/scores", {
 				method: "POST",
 				headers: {
 					'Accept': 'application/json',
@@ -171,7 +171,7 @@ export default class GameContainer extends React.Component {
 	}
 
 	renderColorSlots = () => {
-		return [0, 1, 2, 3, 4, 5, 6, 7].map(x => <ColorSlots updateCurrentSlot={this.updateCurrentSlot} updateColorsOnSlot={this.updateColorsOnSlot} feedbackBoard={this.state.feedbackBoard} currentBoard={this.state.currentBoard} currentSlot={this.state.currentSlot} id={x} key={x}/>)
+		return [0, 1, 2, 3, 4, 5, 6, 7].map(x => <ColorSlots selectedColor={this.state.selectedColor} updateCurrentSlot={this.updateCurrentSlot} updateColorsOnSlot={this.updateColorsOnSlot} feedbackBoard={this.state.feedbackBoard} currentBoard={this.state.currentBoard} currentSlot={this.state.currentSlot} id={x} key={x}/>)
 	}
 
 	render(){
