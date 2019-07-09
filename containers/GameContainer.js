@@ -3,25 +3,27 @@ import { Text, View, Button } from 'react-native'
 import Score from '../components/Score'
 import ColorSlots from '../components/ColorSlots'
 import ColorPicker from '../components/ColorPicker'
-
+let colors =["white", "white", "white", "white", "hotpink", "hotpink", "hotpink", "hotpink", "yellow", "yellow", "yellow", "yellow","green", "green", "green", "green","red", "red", "red", "red", "blue", "blue", "blue", "blue"]
 let empty =['grey', 'grey', 'grey', 'grey']
 let emptyBoard = [[...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty]]
-let colors =["white", "white", "white", "white", "hotpink", "hotpink", "hotpink", "hotpink", "yellow", "yellow", "yellow", "yellow","green", "green", "green", "green","red", "red", "red", "red", "blue", "blue", "blue", "blue"]
-let anotherEmptyBoard = [[...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty]]
 
 export default class GameContainer extends React.Component {
 
 	state={
 		currentSlot: 7,
 		selectedColor: null,
-		currentBoard: [...emptyBoard],
-		feedbackBoard: [...anotherEmptyBoard],
+		currentBoard: emptyBoard,
+		feedbackBoard: emptyBoard,
 		winningBoard: null,
 		win: false,
 		score: 0
 
 	}
-
+	createEmptyBoard = () =>{
+		let empty =['grey', 'grey', 'grey', 'grey']
+		return  [[...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty]]
+		 
+	}
 	updateSelectedColor = (color) => {
 		this.setState({
 			selectedColor: color
@@ -30,10 +32,15 @@ export default class GameContainer extends React.Component {
 
 	updateCurrentSlot = () => {
 		this.checkGuess();
-		oldSlot = this.state.currentSlot
-		this.setState({
-			currentSlot: oldSlot - 1
-		})
+		if(this.state.currentSlot>0){
+
+			oldSlot = this.state.currentSlot
+			this.setState({
+				currentSlot: oldSlot - 1
+			})
+		}else{
+			
+		}
 	}
 
 	shuffle = (a) => {
@@ -59,8 +66,10 @@ export default class GameContainer extends React.Component {
 			this.setState({
 				score: score
 			})
-		}).catch(error => console.error(error))
+		})
 		this.setState({
+			currentBoard: this.createEmptyBoard(),
+			feedbackBoard: this.createEmptyBoard(),
 			winningBoard: this.generateWinningColors()
 		})
 
@@ -69,7 +78,8 @@ export default class GameContainer extends React.Component {
 	componentDidUpdate(prevProps, prevState){
 		
 		if(prevState.win !== this.state.win){
-			fetch("https://fc4e63af.ngrok.io/scores", {
+			console.log("component did update AND passed conditional")
+			fetch("https://3baf2a3d.ngrok.io/scores", {
 				method: "POST",
 				headers: {
 					'Accept': 'application/json',
@@ -146,8 +156,8 @@ export default class GameContainer extends React.Component {
 		this.setState({
 			currentSlot: 7,
 			selectedColor: "white",
-			currentBoard: [...emptyBoard],
-			feedbackBoard: [...anotherEmptyBoard],
+			currentBoard: this.createEmptyBoard(),
+			feedbackBoard: this.createEmptyBoard(),
 			winningBoard: this.generateWinningColors(),
 			win: false,
 		})
@@ -161,28 +171,20 @@ export default class GameContainer extends React.Component {
 	}
 
 	renderColorSlots = () => {
-		return [0, 1, 2, 3, 4, 5, 6, 7].map(x => <ColorSlots selectedColor={this.state.selectedColor} updateCurrentSlot={this.updateCurrentSlot} updateColorsOnSlot={this.updateColorsOnSlot} feedbackBoard={this.state.feedbackBoard} currentBoard={this.state.currentBoard} currentSlot={this.state.currentSlot} id={x} key={x}/>)
+		return [0, 1, 2, 3, 4, 5, 6, 7].map(x => <ColorSlots updateCurrentSlot={this.updateCurrentSlot} updateColorsOnSlot={this.updateColorsOnSlot} feedbackBoard={this.state.feedbackBoard} currentBoard={this.state.currentBoard} currentSlot={this.state.currentSlot} id={x} key={x}/>)
 	}
 
 	render(){
-
-		console.log("Score", this.state.score)
+		console.log(this.state.score)
 		return(
 			<View>
 				<Score score={this.state.score} />
 				{this.state.win 
 				?
-
-				<>
 				<Button onPress={this.restartGame} title="You Win! Play Another Game?"></Button>
-				<View style={{flexDirection: 'row'}}>
-					{this.state.winningBoard.map(color=><View key={Math.random()} style={{backgroundColor: color, borderRadius: 100, height: 40, width: 40, marginLeft: 20, marginTop: 5}}></View>)}
-				</View>
-				</>
 				:
 				<>
 					{this.renderColorSlots()}
-
 					<ColorPicker updateSelectedColor={this.updateSelectedColor}/>
 				</>
 				}
