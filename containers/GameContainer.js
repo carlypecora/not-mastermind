@@ -16,6 +16,7 @@ export default class GameContainer extends React.Component {
 		feedbackBoard: emptyBoard,
 		winningBoard: null,
 		win: false,
+		done: false,
 		score: 0
 
 	}
@@ -39,7 +40,18 @@ export default class GameContainer extends React.Component {
 				currentSlot: oldSlot - 1
 			})
 		}else{
-			
+			this.setState({
+				done: true   
+			})
+		}
+	}
+
+	createMessage=() => {
+		if(this.state.win){
+			return "You Win! Play Another Game?"
+		}
+		else{
+			return "Sorry, you lost. Try Again?"
 		}
 	}
 
@@ -60,7 +72,7 @@ export default class GameContainer extends React.Component {
 	}
 
 	componentDidMount(){
-		fetch("https://fc4e63af.ngrok.io/total"	)
+		fetch("https://3baf2a3d.ngrok.io/total"	)
 		.then(r => r.json())
 		.then(score =>{
 			this.setState({
@@ -79,7 +91,7 @@ export default class GameContainer extends React.Component {
 		
 		if(prevState.win !== this.state.win){
 			console.log("component did update AND passed conditional")
-			fetch("https://fc4e63af.ngrok.io/scores", {
+			fetch("https://3baf2a3d.ngrok.io/scores", {
 				method: "POST",
 				headers: {
 					'Accept': 'application/json',
@@ -160,13 +172,15 @@ export default class GameContainer extends React.Component {
 			feedbackBoard: this.createEmptyBoard(),
 			winningBoard: this.generateWinningColors(),
 			win: false,
+			done: false
 		})
 	}
 	updateColorsOnSlot = (index) => {
-		let updatedBoard = [...this.state.currentBoard]
-		updatedBoard[this.state.currentSlot][index] = this.state.selectedColor
-		this.setState({
-			currentBoard: updatedBoard
+			let updatedBoard = [...this.state.currentBoard]
+			updatedBoard[this.state.currentSlot][index] = this.state.selectedColor
+			this.setState({
+				currentBoard: updatedBoard
+			
 		})
 	}
 
@@ -179,10 +193,10 @@ export default class GameContainer extends React.Component {
 		return(
 			<View>
 				<Score score={this.state.score} />
-				{this.state.win 
+				{this.state.done || this.state.win
 				?
 				<>
-				<Button onPress={this.restartGame} title="You Win! Play Another Game?"></Button>
+				<Button onPress={this.restartGame} title={this.createMessage()}></Button>
 				<View style={{flexDirection: 'row'}}>
 					{this.state.winningBoard.map(color=><View key={Math.random()} style={{backgroundColor: color, borderRadius: 100, height: 40, width: 40, marginLeft: 20, marginTop: 5}}></View>)}
 				</View>
