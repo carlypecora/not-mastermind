@@ -155,7 +155,10 @@ export default class GameContainer extends React.Component {
 				<Score score={this.props.score} />
 				{this.state.win 
 				?
-				<Button onPress={this.forceUpdate} title="You Win! Play Another Game?">{}</Button>
+				<>
+				<Button onPress={this.forceUpdate} title="You Win! Play Another Game?"></Button>
+				{this.state.winningBoard.map(color=><View style={{backgroundColor: color, borderRadius: 100, height: 40, width: 40, marginLeft: 20, marginTop: 5, flexDirection: 'row'}}></View>)}
+				</>
 				:
 				<>
 					{this.renderColorSlots()}
