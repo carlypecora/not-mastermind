@@ -11,7 +11,7 @@ export default class GameContainer extends React.Component {
 
 	state={
 		currentSlot: 7,
-		selectedColor: "white",
+		selectedColor: null,
 		currentBoard: emptyBoard,
 		feedbackBoard: emptyBoard,
 		winningBoard: null,
@@ -38,6 +38,8 @@ export default class GameContainer extends React.Component {
 			this.setState({
 				currentSlot: oldSlot - 1
 			})
+		}else{
+			
 		}
 	}
 
