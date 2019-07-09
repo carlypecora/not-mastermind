@@ -53,13 +53,13 @@ export default class GameContainer extends React.Component {
 	}
 
 	componentDidMount(){
-		fetch("localhost:3000/total")
+		fetch("https://fc4e63af.ngrok.io/total")
 		.then(r => r.json())
 		.then(score =>{
 			this.setState({
 				score: score
 			})
-		})
+		}).catch(error => console.error(error))
 		this.setState({
 			winningBoard: this.generateWinningColors()
 		})
@@ -67,7 +67,7 @@ export default class GameContainer extends React.Component {
 
 	componentDidUpdate(prevProps, prevState){
 		if(prevState.win !== this.state.win){
-			fetch("localhost:3000/scores", {
+			fetch("https://fc4e63af.ngrok.io/scores", {
 				method: "POST",
 				headers: {
 					'Accept': 'application/json',
@@ -149,13 +149,13 @@ export default class GameContainer extends React.Component {
 	}
 
 	render(){
-		
+		console.log("Score", this.state.score)
 		return(
 			<View>
 				<Score score={this.props.score} />
 				{this.state.win 
 				?
-				<Button onPress={this.forceUpdate} title="You Win! Play Another Game?"></Button>
+				<Button onPress={this.forceUpdate} title="You Win! Play Another Game?">{}</Button>
 				:
 				<>
 					{this.renderColorSlots()}
