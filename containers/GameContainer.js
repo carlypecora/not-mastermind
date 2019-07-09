@@ -17,7 +17,8 @@ export default class GameContainer extends React.Component {
 		currentBoard: [...emptyBoard],
 		feedbackBoard: [...anotherEmptyBoard],
 		winningBoard: null,
-		win: false
+		win: false,
+		score: 0
 
 	}
 
@@ -52,9 +53,37 @@ export default class GameContainer extends React.Component {
 	}
 
 	componentDidMount(){
+		fetch("https://3baf2a3d.ngrok.io/total"	)
+		.then(r => r.json())
+		.then(score =>{
+			this.setState({
+				score: score
+			})
+		})
 		this.setState({
 			winningBoard: this.generateWinningColors()
 		})
+
+	}
+
+	componentDidUpdate(prevProps, prevState){
+		
+		if(prevState.win !== this.state.win){
+			console.log("component did update AND passed conditional")
+			fetch("https://3baf2a3d.ngrok.io/scores", {
+				method: "POST",
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+				  },
+				body: JSON.stringify({score: 20})
+			}).catch(error => console.error('Post request Error', error))
+
+			this.setState({
+				score: this.state.score + 20
+			})
+		}
+
 	}
 
 	checkGuess = () => {
@@ -113,7 +142,17 @@ export default class GameContainer extends React.Component {
 		})
 	}
 
+	restartGame = () => {
 	
+		this.setState({
+			currentSlot: 7,
+			selectedColor: "white",
+			currentBoard: [...emptyBoard],
+			feedbackBoard: [...anotherEmptyBoard],
+			winningBoard: this.generateWinningColors(),
+			win: false,
+		})
+	}
 	updateColorsOnSlot = (index) => {
 		let updatedBoard = [...this.state.currentBoard]
 		updatedBoard[this.state.currentSlot][index] = this.state.selectedColor
@@ -127,13 +166,13 @@ export default class GameContainer extends React.Component {
 	}
 
 	render(){
-		
+		console.log(this.state.score)
 		return(
 			<View>
-				<Score score={this.props.score} />
+				<Score score={this.state.score} />
 				{this.state.win 
 				?
-				<Button onPress={this.forceUpdate} title="You Win! Play Another Game?"></Button>
+				<Button onPress={this.restartGame} title="You Win! Play Another Game?"></Button>
 				:
 				<>
 					{this.renderColorSlots()}
