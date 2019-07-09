@@ -17,7 +17,8 @@ export default class GameContainer extends React.Component {
 		currentBoard: [...emptyBoard],
 		feedbackBoard: [...anotherEmptyBoard],
 		winningBoard: null,
-		win: false
+		win: false,
+		score: 0
 
 	}
 
@@ -52,9 +53,30 @@ export default class GameContainer extends React.Component {
 	}
 
 	componentDidMount(){
+		fetch("localhost:3000/total")
+		.then(r => r.json())
+		.then(score =>{
+			this.setState({
+				score: score
+			})
+		})
 		this.setState({
 			winningBoard: this.generateWinningColors()
 		})
+	}
+
+	componentDidUpdate(prevProps, prevState){
+		if(prevState.win !== this.state.win){
+			fetch("localhost:3000/scores", {
+				method: "POST",
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				  },
+				body: JSON.stringify({score: 20})
+			})
+		}
+
 	}
 
 	checkGuess = () => {
