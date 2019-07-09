@@ -53,7 +53,7 @@ export default class GameContainer extends React.Component {
 	}
 
 	componentDidMount(){
-		fetch("https://fc4e63af.ngrok.io/total")
+		fetch("https://3baf2a3d.ngrok.io/total"	)
 		.then(r => r.json())
 		.then(score =>{
 			this.setState({
@@ -63,17 +63,23 @@ export default class GameContainer extends React.Component {
 		this.setState({
 			winningBoard: this.generateWinningColors()
 		})
+
 	}
 
 	componentDidUpdate(prevProps, prevState){
+		
 		if(prevState.win !== this.state.win){
 			fetch("https://fc4e63af.ngrok.io/scores", {
 				method: "POST",
 				headers: {
 					'Accept': 'application/json',
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
 				  },
 				body: JSON.stringify({score: 20})
+			}).catch(error => console.error('Post request Error', error))
+
+			this.setState({
+				score: this.state.score + 20
 			})
 		}
 
@@ -135,7 +141,17 @@ export default class GameContainer extends React.Component {
 		})
 	}
 
+	restartGame = () => {
 	
+		this.setState({
+			currentSlot: 7,
+			selectedColor: "white",
+			currentBoard: [...emptyBoard],
+			feedbackBoard: [...anotherEmptyBoard],
+			winningBoard: this.generateWinningColors(),
+			win: false,
+		})
+	}
 	updateColorsOnSlot = (index) => {
 		let updatedBoard = [...this.state.currentBoard]
 		updatedBoard[this.state.currentSlot][index] = this.state.selectedColor
@@ -149,14 +165,16 @@ export default class GameContainer extends React.Component {
 	}
 
 	render(){
+
 		console.log("Score", this.state.score)
 		return(
 			<View>
-				<Score score={this.props.score} />
+				<Score score={this.state.score} />
 				{this.state.win 
 				?
+
 				<>
-				<Button onPress={this.forceUpdate} title="You Win! Play Another Game?"></Button>
+				<Button onPress={this.restartGame} title="You Win! Play Another Game?"></Button>
 				<View style={{flexDirection: 'row'}}>
 					{this.state.winningBoard.map(color=><View key={Math.random()} style={{backgroundColor: color, borderRadius: 100, height: 40, width: 40, marginLeft: 20, marginTop: 5}}></View>)}
 				</View>
