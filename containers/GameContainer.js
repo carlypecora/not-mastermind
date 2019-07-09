@@ -3,25 +3,27 @@ import { Text, View, Button } from 'react-native'
 import Score from '../components/Score'
 import ColorSlots from '../components/ColorSlots'
 import ColorPicker from '../components/ColorPicker'
-
+let colors =["white", "white", "white", "white", "hotpink", "hotpink", "hotpink", "hotpink", "yellow", "yellow", "yellow", "yellow","green", "green", "green", "green","red", "red", "red", "red", "blue", "blue", "blue", "blue"]
 let empty =['grey', 'grey', 'grey', 'grey']
 let emptyBoard = [[...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty]]
-let colors =["white", "white", "white", "white", "hotpink", "hotpink", "hotpink", "hotpink", "yellow", "yellow", "yellow", "yellow","green", "green", "green", "green","red", "red", "red", "red", "blue", "blue", "blue", "blue"]
-let anotherEmptyBoard = [[...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty]]
 
 export default class GameContainer extends React.Component {
 
 	state={
 		currentSlot: 7,
 		selectedColor: "white",
-		currentBoard: [...emptyBoard],
-		feedbackBoard: [...anotherEmptyBoard],
+		currentBoard: emptyBoard,
+		feedbackBoard: emptyBoard,
 		winningBoard: null,
 		win: false,
 		score: 0
 
 	}
-
+	createEmptyBoard = () =>{
+		let empty =['grey', 'grey', 'grey', 'grey']
+		return  [[...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty]]
+		 
+	}
 	updateSelectedColor = (color) => {
 		this.setState({
 			selectedColor: color
@@ -30,10 +32,13 @@ export default class GameContainer extends React.Component {
 
 	updateCurrentSlot = () => {
 		this.checkGuess();
-		oldSlot = this.state.currentSlot
-		this.setState({
-			currentSlot: oldSlot - 1
-		})
+		if(this.state.currentSlot>0){
+
+			oldSlot = this.state.currentSlot
+			this.setState({
+				currentSlot: oldSlot - 1
+			})
+		}
 	}
 
 	shuffle = (a) => {
@@ -61,6 +66,8 @@ export default class GameContainer extends React.Component {
 			})
 		})
 		this.setState({
+			currentBoard: this.createEmptyBoard(),
+			feedbackBoard: this.createEmptyBoard(),
 			winningBoard: this.generateWinningColors()
 		})
 
@@ -147,8 +154,8 @@ export default class GameContainer extends React.Component {
 		this.setState({
 			currentSlot: 7,
 			selectedColor: "white",
-			currentBoard: [...emptyBoard],
-			feedbackBoard: [...anotherEmptyBoard],
+			currentBoard: this.createEmptyBoard(),
+			feedbackBoard: this.createEmptyBoard(),
 			winningBoard: this.generateWinningColors(),
 			win: false,
 		})
