@@ -13,7 +13,7 @@ export default class GameContainer extends React.Component {
 
 	state={
 		currentSlot: 7,
-		selectedColor: "white",
+		selectedColor: null,
 		currentBoard: [...emptyBoard],
 		feedbackBoard: [...anotherEmptyBoard],
 		winningBoard: null,
@@ -145,7 +145,7 @@ export default class GameContainer extends React.Component {
 	}
 
 	renderColorSlots = () => {
-		return [0, 1, 2, 3, 4, 5, 6, 7].map(x => <ColorSlots updateCurrentSlot={this.updateCurrentSlot} updateColorsOnSlot={this.updateColorsOnSlot} feedbackBoard={this.state.feedbackBoard} currentBoard={this.state.currentBoard} currentSlot={this.state.currentSlot} id={x} key={x}/>)
+		return [0, 1, 2, 3, 4, 5, 6, 7].map(x => <ColorSlots selectedColor={this.state.selectedColor} updateCurrentSlot={this.updateCurrentSlot} updateColorsOnSlot={this.updateColorsOnSlot} feedbackBoard={this.state.feedbackBoard} currentBoard={this.state.currentBoard} currentSlot={this.state.currentSlot} id={x} key={x}/>)
 	}
 
 	render(){
@@ -157,11 +157,14 @@ export default class GameContainer extends React.Component {
 				?
 				<>
 				<Button onPress={this.forceUpdate} title="You Win! Play Another Game?"></Button>
-				{this.state.winningBoard.map(color=><View style={{backgroundColor: color, borderRadius: 100, height: 40, width: 40, marginLeft: 20, marginTop: 5, flexDirection: 'row'}}></View>)}
+				<View style={{flexDirection: 'row'}}>
+					{this.state.winningBoard.map(color=><View key={Math.random()} style={{backgroundColor: color, borderRadius: 100, height: 40, width: 40, marginLeft: 20, marginTop: 5}}></View>)}
+				</View>
 				</>
 				:
 				<>
 					{this.renderColorSlots()}
+
 					<ColorPicker updateSelectedColor={this.updateSelectedColor}/>
 				</>
 				}
