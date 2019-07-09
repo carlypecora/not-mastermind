@@ -181,7 +181,12 @@ export default class GameContainer extends React.Component {
 				<Score score={this.state.score} />
 				{this.state.win 
 				?
+				<>
 				<Button onPress={this.restartGame} title="You Win! Play Another Game?"></Button>
+				<View style={{flexDirection: 'row'}}>
+					{this.state.winningBoard.map(color=><View key={Math.random()} style={{backgroundColor: color, borderRadius: 100, height: 40, width: 40, marginLeft: 20, marginTop: 5}}></View>)}
+				</View>
+				</>
 				:
 				<>
 					{this.renderColorSlots()}
