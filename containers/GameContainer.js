@@ -13,7 +13,7 @@ export default class GameContainer extends React.Component {
 
 	state={
 		currentSlot: 7,
-		selectedColor: "white",
+		selectedColor: null,
 		currentBoard: [...emptyBoard],
 		feedbackBoard: [...anotherEmptyBoard],
 		winningBoard: null,
@@ -59,7 +59,7 @@ export default class GameContainer extends React.Component {
 			this.setState({
 				score: score
 			})
-		})
+		}).catch(error => console.error(error))
 		this.setState({
 			winningBoard: this.generateWinningColors()
 		})
@@ -69,8 +69,7 @@ export default class GameContainer extends React.Component {
 	componentDidUpdate(prevProps, prevState){
 		
 		if(prevState.win !== this.state.win){
-			console.log("component did update AND passed conditional")
-			fetch("https://3baf2a3d.ngrok.io/scores", {
+			fetch("https://fc4e63af.ngrok.io/scores", {
 				method: "POST",
 				headers: {
 					'Accept': 'application/json',
@@ -162,20 +161,28 @@ export default class GameContainer extends React.Component {
 	}
 
 	renderColorSlots = () => {
-		return [0, 1, 2, 3, 4, 5, 6, 7].map(x => <ColorSlots updateCurrentSlot={this.updateCurrentSlot} updateColorsOnSlot={this.updateColorsOnSlot} feedbackBoard={this.state.feedbackBoard} currentBoard={this.state.currentBoard} currentSlot={this.state.currentSlot} id={x} key={x}/>)
+		return [0, 1, 2, 3, 4, 5, 6, 7].map(x => <ColorSlots selectedColor={this.state.selectedColor} updateCurrentSlot={this.updateCurrentSlot} updateColorsOnSlot={this.updateColorsOnSlot} feedbackBoard={this.state.feedbackBoard} currentBoard={this.state.currentBoard} currentSlot={this.state.currentSlot} id={x} key={x}/>)
 	}
 
 	render(){
-		console.log(this.state.score)
+
+		console.log("Score", this.state.score)
 		return(
 			<View>
 				<Score score={this.state.score} />
 				{this.state.win 
 				?
+
+				<>
 				<Button onPress={this.restartGame} title="You Win! Play Another Game?"></Button>
+				<View style={{flexDirection: 'row'}}>
+					{this.state.winningBoard.map(color=><View key={Math.random()} style={{backgroundColor: color, borderRadius: 100, height: 40, width: 40, marginLeft: 20, marginTop: 5}}></View>)}
+				</View>
+				</>
 				:
 				<>
 					{this.renderColorSlots()}
+
 					<ColorPicker updateSelectedColor={this.updateSelectedColor}/>
 				</>
 				}
