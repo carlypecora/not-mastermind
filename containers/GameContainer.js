@@ -72,7 +72,7 @@ export default class GameContainer extends React.Component {
 	}
 
 	componentDidMount(){
-		fetch("https://3baf2a3d.ngrok.io/total"	)
+		fetch("https://fc4e63af.ngrok.io/total"	)
 		.then(r => r.json())
 		.then(score =>{
 			this.setState({
@@ -91,7 +91,7 @@ export default class GameContainer extends React.Component {
 		
 		if(prevState.win !== this.state.win){
 			console.log("component did update AND passed conditional")
-			fetch("https://3baf2a3d.ngrok.io/scores", {
+			fetch("https://fc4e63af.ngrok.io/scores", {
 				method: "POST",
 				headers: {
 					'Accept': 'application/json',

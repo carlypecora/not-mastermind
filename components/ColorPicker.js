@@ -9,7 +9,8 @@ export default class ColorPicker extends React.Component {
 
 	render(){
 		return(
-				<View style={{backgroundColor: 'gray', marginTop: 0, flex: 4, width: 375, flexDirection: 'row'}}>
+				<View style={{backgroundColor: 'gray', marginTop: 0, marginLeft: 0, flex: 4, width: 400, flexDirection: 'row', alignItems: 'center',
+    	justifyContent: 'center'}}>
 				<>
 				{colors.map(color => {
 					return (
