@@ -11,7 +11,7 @@ export default class GameContainer extends React.Component {
 
 	state={
 		currentSlot: 7,
-		selectedColor: "white",
+		selectedColor: "#F5EEEA",
 		currentBoard: emptyBoard,
 		feedbackBoard: emptyBoard,
 		winningBoard: null,
@@ -72,7 +72,7 @@ export default class GameContainer extends React.Component {
 	}
 
 	componentDidMount(){
-		fetch("https://fc4e63af.ngrok.io/total"	)
+		fetch("https://3baf2a3d.ngrok.io/total"	)
 		.then(r => r.json())
 		.then(score =>{
 			this.setState({
@@ -91,7 +91,7 @@ export default class GameContainer extends React.Component {
 		
 		if(prevState.win !== this.state.win){
 			console.log("component did update AND passed conditional")
-			fetch("https://fc4e63af.ngrok.io/scores", {
+			fetch("https://3baf2a3d.ngrok.io/scores", {
 				method: "POST",
 				headers: {
 					'Accept': 'application/json',
@@ -167,7 +167,7 @@ export default class GameContainer extends React.Component {
 	
 		this.setState({
 			currentSlot: 7,
-			selectedColor: "white",
+			selectedColor: "#F5EEEA",
 			currentBoard: this.createEmptyBoard(),
 			feedbackBoard: this.createEmptyBoard(),
 			winningBoard: this.generateWinningColors(),
