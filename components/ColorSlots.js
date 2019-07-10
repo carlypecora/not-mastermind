@@ -27,7 +27,7 @@ export default class ColorSlots extends React.Component {
 			 	 </TouchableHighlight>
 					)
 				})}
-					{this.props.currentBoard[this.props.id].includes("grey") ? <View style={{flexDirection: 'row', marginTop: 5, marginLeft: 75}}><View style={{backgroundColor: this.props.selectedColor, borderRadius: 100, height: 40, width: 40, float: 'right'}}></View></View> : <Button onPress={this.props.updateCurrentSlot} title="OK!"></Button>}
+					{this.props.currentBoard[this.props.id].includes("grey") ? <View style={{flexDirection: 'row', marginTop: 5, marginLeft: 75}}><View style={{backgroundColor: this.props.selectedColor, borderRadius: 100, height: 40, width: 40, float: 'right'}}></View></View> : <Button onPress={this.props.updateCurrentSlot} title="OK!" color='#213960'></Button>}
 				</>
 				: 
 				<>

@@ -3,7 +3,7 @@ import { Text, View, Button } from 'react-native'
 import Score from '../components/Score'
 import ColorSlots from '../components/ColorSlots'
 import ColorPicker from '../components/ColorPicker'
-let colors =["white", "white", "white", "white", "hotpink", "hotpink", "hotpink", "hotpink", "yellow", "yellow", "yellow", "yellow","green", "green", "green", "green","red", "red", "red", "red", "blue", "blue", "blue", "blue"]
+let colors =["#F5EEEA", "#F5EEEA", "#F5EEEA", "#F5EEEA", "#890D96", "#890D96", "#890D96", "#890D96", "#FC8012", "#FC8012", "#FC8012", "#FC8012","#0B9797", "#0B9797", "#0B9797", "#0B9797","#ec1037", "#ec1037", "#ec1037", "#ec1037", "#1C47A8", "#1C47A8", "#1C47A8", "#1C47A8"]
 let empty =['grey', 'grey', 'grey', 'grey']
 let emptyBoard = [[...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty], [...empty]]
 
@@ -11,7 +11,7 @@ export default class GameContainer extends React.Component {
 
 	state={
 		currentSlot: 7,
-		selectedColor: null,
+		selectedColor: "white",
 		currentBoard: emptyBoard,
 		feedbackBoard: emptyBoard,
 		winningBoard: null,
@@ -196,9 +196,10 @@ export default class GameContainer extends React.Component {
 				{this.state.done || this.state.win
 				?
 				<>
-				<Button onPress={this.restartGame} title={this.createMessage()}></Button>
-				<View style={{flexDirection: 'row'}}>
-					{this.state.winningBoard.map(color=><View key={Math.random()} style={{backgroundColor: color, borderRadius: 100, height: 40, width: 40, marginLeft: 20, marginTop: 5}}></View>)}
+				<Button onPress={this.restartGame} title={this.createMessage()} color='#213960'></Button>
+				<View style={{flexDirection: 'row', alignItems: 'center',
+    	justifyContent: 'center'}}>
+					{this.state.winningBoard.map(color=><View key={Math.random()} style={{backgroundColor: color, borderRadius: 100, height: 40, width: 40, margin: 10}}></View>)}
 				</View>
 				</>
 				:

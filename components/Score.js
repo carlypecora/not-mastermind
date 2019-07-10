@@ -16,7 +16,7 @@ export default class Score extends React.Component {
 const styles = StyleSheet.create({
 	wrapper: {
 		marginTop: 0,
-		backgroundColor: 'gray',
+		backgroundColor: '#165B50',
 		width: 400,
 		flexDirection: 'row',
 		alignItems: 'center',
